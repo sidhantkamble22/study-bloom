@@ -2,48 +2,50 @@ import Navbar from "@/components/Navbar";
 import TimerCard from "@/components/TimerCard";
 import PlantCard from "@/components/PlantCard";
 import TaskCard from "@/components/TaskCard";
-
+import BottomNav from "@/components/BottomNav";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#F6F2FF]">
+    <main className="min-h-screen bg-[#F8F5FF]">
+      <div className="max-w-7xl mx-auto px-5 md:px-10 py-8">
 
-      {/* Container */}
-      <div className="max-w-md mx-auto px-5 pt-8 pb-28">
-
-        {/* Navbar */}
         <Navbar />
 
-        {/* Welcome */}
-        <section className="mt-8">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+        <section className="mt-10">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
             StudyBloom
           </h1>
 
-          <p className="mt-2 text-gray-500 leading-7">
-            Stay focused, grow your virtual plant and build your study streak.
+          <p className="text-gray-500 mt-3">
+            Focus, learn and grow every day.
           </p>
         </section>
 
-        {/* Timer */}
-        <section className="mt-8">
-          <TimerCard />
-        </section>
 
-        {/* Plant */}
-        <section className="mt-8">
-          <PlantCard />
-        </section>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
 
-        {/* Tasks */}
-        <section className="mt-8">
+          <div className="lg:col-span-2">
+            <TimerCard />
+          </div>
+
+
+          <div>
+            <PlantCard />
+          </div>
+
+        </div>
+
+
+        <div className="mt-8 max-w-3xl">
           <TaskCard />
-        </section>
+        </div>
+
 
       </div>
 
-      {/* Bottom Navigation */}
-      
+      <div className="md:hidden">
+        <BottomNav />
+      </div>
 
     </main>
   );

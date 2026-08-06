@@ -1,51 +1,190 @@
-import { FaLeaf } from "react-icons/fa";
+"use client";
+
+import Image from "next/image";
+import { Droplets, Sprout } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function PlantCard() {
+
   return (
-    <div className="mt-8 bg-white rounded-[32px] shadow-lg p-6">
+    <section
+      className="
+        bg-white
+        rounded-[32px]
+        p-6
+        shadow-lg
+      "
+    >
+
+      {/* Header */}
 
       <div className="flex justify-between items-center">
 
         <div>
-          <p className="text-gray-500 text-sm">My Plant</p>
 
-          <h2 className="text-2xl font-bold text-[#6B46C1]">
-            Little Sprout 🌱
+          <p className="
+            text-sm
+            text-violet-500
+            font-medium
+          ">
+            Your Plant
+          </p>
+
+
+          <h2 className="
+            text-2xl
+            font-bold
+            text-gray-900
+            mt-1
+          ">
+            Little Sprout
           </h2>
 
-          <p className="text-gray-500 mt-1">
-            Level 1
+
+          <p className="
+            text-gray-400
+            mt-1
+          ">
+            Growth Level 1
           </p>
+
         </div>
 
-        <div className="w-24 h-24 bg-[#F4EDFF] rounded-full flex items-center justify-center text-5xl">
-          🌱
-        </div>
+
+
+        <motion.div
+          animate={{
+            y:[0,-8,0]
+          }}
+          transition={{
+            duration:3,
+            repeat:Infinity
+          }}
+
+          className="
+            w-28
+            h-28
+            rounded-full
+            bg-violet-50
+            flex
+            items-center
+            justify-center
+          "
+        >
+
+          <Sprout
+            size={55}
+            className="text-green-500"
+          />
+
+        </motion.div>
+
 
       </div>
 
-      <div className="mt-6">
 
-        <div className="flex justify-between mb-2">
-          <span className="text-sm text-gray-500">
+
+
+      {/* Progress */}
+
+      <div className="mt-7">
+
+
+        <div className="
+          flex
+          justify-between
+          text-sm
+          mb-2
+        ">
+
+          <span className="text-gray-500">
             Growth Progress
           </span>
 
-          <span className="text-sm font-semibold">
+
+          <span className="
+            font-semibold
+            text-violet-600
+          ">
             6 / 20
           </span>
+
+
         </div>
 
-        <div className="w-full h-3 rounded-full bg-gray-200 overflow-hidden">
-          <div className="w-[30%] h-full bg-[#8BC34A] rounded-full"></div>
+
+
+        <div
+          className="
+            w-full
+            h-3
+            bg-gray-100
+            rounded-full
+            overflow-hidden
+          "
+        >
+
+          <motion.div
+
+            initial={{
+              width:0
+            }}
+
+            animate={{
+              width:"30%"
+            }}
+
+            transition={{
+              duration:1
+            }}
+
+            className="
+              h-full
+              bg-gradient-to-r
+              from-violet-400
+              to-green-400
+              rounded-full
+            "
+
+          />
+
         </div>
+
 
       </div>
 
-      <button className="mt-6 w-full bg-[#CDB4FF] hover:bg-[#b89df8] text-white py-3 rounded-full font-semibold transition">
-        💧 Water Plant
+
+
+
+
+      {/* Water Button */}
+
+      <button
+        className="
+          mt-7
+          w-full
+          h-14
+          rounded-2xl
+          bg-violet-600
+          text-white
+          font-semibold
+          flex
+          items-center
+          justify-center
+          gap-2
+          hover:scale-[1.02]
+          transition
+          shadow-lg
+        "
+      >
+
+        <Droplets size={20}/>
+
+        Water Plant
+
       </button>
 
-    </div>
+
+    </section>
   );
 }
