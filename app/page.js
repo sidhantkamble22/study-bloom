@@ -1,51 +1,29 @@
 import Navbar from "@/components/Navbar";
-import TimerCard from "@/components/TimerCard";
-import PlantCard from "@/components/PlantCard";
-import TaskCard from "@/components/TaskCard";
-import BottomNav from "@/components/BottomNav";
+import Timer from "@/components/Timer";
+import TaskList from "@/components/TaskList";
+import Plant from "@/components/Plant";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#F8F5FF]">
-      <div className="max-w-7xl mx-auto px-5 md:px-10 py-8">
+    <main className="min-h-screen bg-[#F3E8FF] px-6 pb-10">
 
-        <Navbar />
+      <Navbar />
 
-        <section className="mt-10">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-            StudyBloom
-          </h1>
+      <section className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
 
-          <p className="text-gray-500 mt-3">
-            Focus, learn and grow every day.
-          </p>
-        </section>
-
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-10">
-
-          <div className="lg:col-span-2">
-            <TimerCard />
-          </div>
-
-
-          <div>
-            <PlantCard />
-          </div>
-
+        <div className="md:col-span-2">
+          <Timer />
         </div>
 
-
-        <div className="mt-8 max-w-3xl">
-          <TaskCard />
+        <div>
+          <TaskList />
         </div>
 
+      </section>
 
-      </div>
-
-      <div className="md:hidden">
-        <BottomNav />
-      </div>
+      <section className="mx-auto mt-6 max-w-6xl">
+        <Plant />
+      </section>
 
     </main>
   );

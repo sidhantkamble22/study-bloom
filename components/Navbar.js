@@ -1,36 +1,21 @@
-"use client";
-
-import { Bell, Search, UserCircle2 } from "lucide-react";
+import { UserRound } from "lucide-react";
 
 export default function Navbar() {
   return (
-    <header className="flex items-center justify-between">
+    <nav className="flex items-center justify-between py-6">
 
-      <div>
-        <p className="text-sm font-medium text-violet-600">
-          Good Evening
-        </p>
+      <h1 className="text-3xl font-bold text-purple-700">
+        Study Bloom
+      </h1>
 
-        <h2 className="text-3xl font-bold text-gray-900 mt-1">
-          Welcome Back
-        </h2>
+      <div className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-sm">
+        <UserRound size={20} className="text-purple-600" />
+
+        <span className="font-medium text-gray-700">
+          Sidhant
+        </span>
       </div>
 
-      <div className="flex items-center gap-3">
-
-        <button className="w-11 h-11 rounded-2xl bg-white shadow-md flex items-center justify-center hover:scale-105 transition">
-          <Search size={20} />
-        </button>
-
-        <button className="w-11 h-11 rounded-2xl bg-white shadow-md flex items-center justify-center hover:scale-105 transition">
-          <Bell size={20} />
-        </button>
-
-        <button className="w-11 h-11 rounded-2xl bg-violet-500 text-white shadow-lg flex items-center justify-center">
-          <UserCircle2 size={24} />
-        </button>
-
-      </div>
-    </header>
+    </nav>
   );
 }
