@@ -1,17 +1,76 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f5ff;
-  --foreground: #1f2937;
+  /* Main Colors */
+  --background: #f7f2ff;
+  --foreground: #302a35;
+
+  /* Lavender Theme */
+  --lavender-primary: #9b7ebd;
+  --lavender-dark: #6f4e8e;
+  --lavender-light: #ede4f8;
+  --lavender-soft: #f4eefa;
+  --lavender-bg: #f7f2ff;
+
+  /* Text */
+  --text-primary: #302a35;
+  --text-muted: #8a8290;
+
+  /* White */
+  --white: #ffffff;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background: linear-gradient(180deg, #f5f0ff 0%, #ffffff 100%);
+  min-height: 100vh;
+
+  background: linear-gradient(
+    180deg,
+    #f7f2ff 0%,
+    #ffffff 100%
+  );
+
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+}
+
+/* Smooth section scrolling */
+section {
+  scroll-margin-top: 24px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--lavender-soft);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--lavender-light);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--lavender-primary);
+}
+
+/* Text selection */
+::selection {
+  background: var(--lavender-light);
+  color: var(--lavender-dark);
 }
