@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Plus,
   Check,
@@ -9,8 +9,32 @@ import {
 } from "lucide-react";
 
 export default function TaskList() {
-  const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState([]);
+ const [task, setTask] = useState("");
+const [tasks, setTasks] = useState([]);
+const [isLoaded, setIsLoaded] = useState(false);
+
+useEffect(() => {
+  try {
+    const savedTasks = localStorage.getItem("study-tasks");
+
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    }
+  } catch (error) {
+    console.error("Failed to load tasks:", error);
+  } finally {
+    setIsLoaded(true);
+  }
+}, []);
+
+useEffect(() => {
+  if (!isLoaded) return;
+
+  localStorage.setItem(
+    "study-tasks",
+    JSON.stringify(tasks)
+  );
+}, [tasks, isLoaded]);
 
   // Add Task
   const addTask = () => {
@@ -53,8 +77,13 @@ export default function TaskList() {
     (item) => item.completed
   ).length;
 
+  const progress =
+    tasks.length > 0
+      ? (completedTasks / tasks.length) * 100
+      : 0;
+
   return (
-    <div className="flex h-[430px] flex-col overflow-hidden rounded-3xl bg-white p-6 shadow-lg">
+    <div className="relative h-full overflow-hidden rounded-3xl border border-purple-100 bg-white p-6 shadow-lg md:p-8">
 
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -89,7 +118,6 @@ export default function TaskList() {
 
       </div>
 
-
       {/* Add Task */}
       <div className="mt-5 flex gap-2">
 
@@ -107,6 +135,7 @@ export default function TaskList() {
         />
 
         <button
+          type="button"
           onClick={addTask}
           aria-label="Add task"
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--lavender-primary)] text-white transition hover:bg-[var(--lavender-dark)] active:scale-95"
@@ -115,7 +144,6 @@ export default function TaskList() {
         </button>
 
       </div>
-
 
       {/* Progress */}
       {tasks.length > 0 && (
@@ -128,10 +156,7 @@ export default function TaskList() {
             </span>
 
             <span className="text-[11px] font-medium text-[var(--lavender-dark)]">
-              {Math.round(
-                (completedTasks / tasks.length) * 100
-              )}
-              %
+              {Math.round(progress)}%
             </span>
 
           </div>
@@ -141,9 +166,7 @@ export default function TaskList() {
             <div
               className="h-full rounded-full bg-[var(--lavender-primary)] transition-all duration-300"
               style={{
-                width: `${
-                  (completedTasks / tasks.length) * 100
-                }%`,
+                width: `${progress}%`,
               }}
             />
 
@@ -152,14 +175,13 @@ export default function TaskList() {
         </div>
       )}
 
-
       {/* Task List */}
       <div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
 
         {tasks.length === 0 ? (
 
           /* Empty State */
-          <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-[var(--lavender-light)]">
+          <div className="flex h-full min-h-[250px] flex-col items-center justify-center rounded-2xl border border-dashed border-[var(--lavender-light)]">
 
             <ListTodo
               size={32}
@@ -189,6 +211,7 @@ export default function TaskList() {
 
                 {/* Complete Button */}
                 <button
+                  type="button"
                   onClick={() => toggleTask(item.id)}
                   aria-label={
                     item.completed
@@ -206,7 +229,6 @@ export default function TaskList() {
                   )}
                 </button>
 
-
                 {/* Task Title */}
                 <span
                   className={`min-w-0 flex-1 break-words text-sm ${
@@ -218,9 +240,9 @@ export default function TaskList() {
                   {item.title}
                 </span>
 
-
                 {/* Delete Button */}
                 <button
+                  type="button"
                   onClick={() => deleteTask(item.id)}
                   aria-label="Delete task"
                   className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-gray-400 transition hover:bg-red-50 hover:text-red-500 active:scale-95"
