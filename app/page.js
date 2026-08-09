@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Navbar from "@/components/Navbar";
 import Timer from "@/components/Timer";
@@ -13,9 +13,33 @@ export default function Home() {
   const [sessionCompleted, setSessionCompleted] =
     useState(0);
 
-  const handleSessionComplete = useCallback(() => {
-    setSessionCompleted((prev) => prev + 1);
-  }, []);
+    useEffect(() => {
+  const savedSessions = localStorage.getItem("studySessions");
+
+  if (savedSessions !== null) {
+    setSessionCompleted(Number(savedSessions));
+  }
+}, []);
+
+
+const handleSessionComplete = useCallback(() => {
+  setSessionCompleted((prev) => {
+    const newCount = prev + 1;
+
+    localStorage.setItem(
+      "studySessions",
+      String(newCount)
+    );
+
+    return newCount;
+  });
+}, []);
+
+const handleResetPlant = useCallback(() => {
+  setSessionCompleted(0);
+  localStorage.setItem("studySessions", "0");
+}, []);
+
 
   return (
     <main className="min-h-screen bg-[var(--background)]">
@@ -65,11 +89,10 @@ export default function Home() {
             id="plant-section"
             className="scroll-mt-24 min-w-0"
           >
-            <Plant
-              sessionCompleted={
-                sessionCompleted
-              }
-            />
+           <Plant
+  sessionCompleted={sessionCompleted}
+  onResetPlant={handleResetPlant}
+/>
           </div>
 
           {/* Music */}

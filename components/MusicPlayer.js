@@ -58,11 +58,9 @@ export default function MusicPlayer() {
       setLoading(true);
       setError("");
 
-      const response = await fetch(
-        `/api/music?query=${encodeURIComponent(
-          query
-        )}&limit=20`
-      );
+     const response = await fetch(
+  `/api/music?query=${encodeURIComponent(query)}&limit=20`
+);
 
       const data = await response.json();
 
@@ -122,30 +120,26 @@ export default function MusicPlayer() {
       return;
     }
 
-    audio.pause();
+   audio.pause();
+audio.currentTime = 0;
+audio.src = currentSong.audio;
+audio.load();
 
-    audio.src =
-      currentSong.audio;
+setProgress(0);
+setDuration(currentSong.duration || 0);
 
-    audio.load();
+if (isPlaying) {
+  const playPromise = audio.play();
 
-    setProgress(0);
+  if (playPromise !== undefined) {
+    playPromise.catch((error) => {
+      if (error.name !== "AbortError") {
+        console.error("Play error:", error);
+        setIsPlaying(false);
+      }
+    });
+  }
 
-    setDuration(
-      currentSong.duration || 0
-    );
-
-    if (isPlaying) {
-      audio
-        .play()
-        .catch((error) => {
-          console.error(
-            "Play error:",
-            error
-          );
-
-          setIsPlaying(false);
-        });
     }
   }, [currentTrack]);
 

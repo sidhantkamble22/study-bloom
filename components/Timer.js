@@ -40,42 +40,51 @@ export default function Timer({ onSessionComplete }) {
   }, [mode, studyMinutes, breakMinutes]);
 
   // Timer logic
-  useEffect(() => {
-    if (!isRunning) return;
+// Timer countdown
+useEffect(() => {
+  if (!isRunning) return;
 
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          setIsRunning(false);
+  const interval = setInterval(() => {
+    setTimeLeft((prev) => {
+      if (prev <= 1) {
+        return 0;
+      }
 
-          if (mode === "study") {
-            if (onSessionComplete) {
-              onSessionComplete();
-            }
+      return prev - 1;
+    });
+  }, 1000);
 
-            setMode("break");
-            setTimeLeft(breakMinutes * 60);
-          } else {
-            setMode("study");
-            setTimeLeft(studyMinutes * 60);
-          }
+  return () => clearInterval(interval);
+}, [isRunning]);
 
-          return 0;
-        }
+// Handle timer completion
+useEffect(() => {
+  if (!isRunning || timeLeft !== 0) return;
 
-        return prev - 1;
-      });
-    }, 1000);
+  setIsRunning(false);
 
-    return () => clearInterval(interval);
-  }, [
-    isRunning,
-    mode,
-    studyMinutes,
-    breakMinutes,
-    onSessionComplete,
-  ]);
+  if (mode === "study") {
+    // One study session completed
+    if (onSessionComplete) {
+      onSessionComplete();
+    }
+
+    // Start break
+    setMode("break");
+    setTimeLeft(breakMinutes * 60);
+  } else {
+    // Break completed → start study
+    setMode("study");
+    setTimeLeft(studyMinutes * 60);
+  }
+}, [
+  timeLeft,
+  isRunning,
+  mode,
+  breakMinutes,
+  studyMinutes,
+  onSessionComplete,
+]);
 
   // Time format
   const minutes = Math.floor(timeLeft / 60)

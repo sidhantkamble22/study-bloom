@@ -171,7 +171,7 @@ export default function TaskList() {
             </p>
 
             <p className="mt-1 text-center text-xs text-gray-300">
-              Add something you want to study
+             Chiuuu Add something you want to study
             </p>
 
           </div>
